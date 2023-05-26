@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -24,10 +22,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 100, nullable = false, unique = true)
+    @Column(name = "name", length = 100, nullable = false, unique = true)
     @Size(min = 3, max = 100)
     @NotBlank
-    private String username;
+    private String name;
 
     @Column(name = "password", length = 60, nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
