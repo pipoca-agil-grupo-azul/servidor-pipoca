@@ -4,18 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name = Users.TABLE_NAME)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    public static final String TABLE_NAME = "user";
+public class Users {
+    public static final String TABLE_NAME = "users";
 
     @Id
     @Column(name = "id", unique = true)
@@ -38,8 +39,8 @@ public class User {
     @NotBlank
     private String email;
 
-    @Column(name = "dateBirth", nullable = false)
-    @NotBlank
+    @Column(name = "date_birth", nullable = false)
+    @NotNull
     private LocalDate dateBirth;
 
 }
