@@ -1,0 +1,25 @@
+version: '3.5'
+services:
+  db:
+    image: postgres
+    container_name: pipocaagil-db
+    ports:
+      - "8011:5432"
+    environment:
+      - POSTGRES_USER=pipocaagil
+      - POSTGRES_PASSWORD=pipocaagil
+      - POSTGRES_DB=pipocaagil
+    volumes:
+      - pipocaagil-db-volume:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - pipocanetwork
+
+volumes:
+  pipocaagil-db-volume:
+    driver: local
+
+
+networks:
+  pipocanetwork:
+    name: pipocanetwork-network
