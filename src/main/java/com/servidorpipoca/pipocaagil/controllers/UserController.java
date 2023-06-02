@@ -1,6 +1,6 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
-import com.servidorpipoca.pipocaagil.models.Users;
+import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,21 +15,21 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> findById(@PathVariable Long id) {
-        Users obj = userService.findById(id);
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User obj = userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        Users createdUser = userService.create(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdUser = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         user.setId(id);
-        Users updatedUser = userService.update(user);
+        User updatedUser = userService.update(user);
         return ResponseEntity.ok(updatedUser);
     }
 

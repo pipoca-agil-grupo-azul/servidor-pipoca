@@ -11,11 +11,11 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = Users.TABLE_NAME)
+@Table(name = User.TABLE_NAME)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
     public static final String TABLE_NAME = "users";
 
     @Id
