@@ -2,10 +2,7 @@ package com.servidorpipoca.pipocaagil.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,7 +21,7 @@ public class User {
     private Long id;
 
     @Column(name = "name", length = 100, nullable = false)
-    @Size(min = 3, max = 100)
+    @Size(min = 8, max = 100)
     @NotBlank
     private String name;
 
@@ -41,6 +38,7 @@ public class User {
 
     @Column(name = "date_birth", nullable = false)
     @NotNull
+    @Past
     private LocalDate dateBirth;
 
 }
