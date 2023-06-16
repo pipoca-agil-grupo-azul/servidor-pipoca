@@ -1,8 +1,8 @@
 package com.servidorpipoca.pipocaagil.exceptions;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +36,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(ObjectNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleObjectNotFoundException(
-            ObjectNotFoundException ex, HttpServletRequest request) {
+            EntityNotFoundException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(), ex.getMessage(),request.getRequestURI());
+                HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getRequestURI());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
