@@ -3,14 +3,14 @@ package com.servidorpipoca.pipocaagil.services;
 import com.servidorpipoca.pipocaagil.exceptions.MinimumAgeException;
 import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
+import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -21,9 +21,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
+
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(() -> new ObjectNotFoundException(HttpStatus.NOT_FOUND,
+        return user.orElseThrow(() -> new EntityNotFoundException(
                 "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
     }
 
@@ -38,15 +44,17 @@ public class UserService {
         }
 
         user.setId(null);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
 
         return user;
     }
 
     @Transactional
-    public User update(User user) {
+    public User update(@Valid User user) {
         User newUser = findById(user.getId());
         newUser.setPassword(user.getPassword());
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
         return userRepository.save(newUser);
     }
