@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://localhost:8080")
+@CrossOrigin(origins = {"https://localhost:8080", "https://localhost:5173"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
