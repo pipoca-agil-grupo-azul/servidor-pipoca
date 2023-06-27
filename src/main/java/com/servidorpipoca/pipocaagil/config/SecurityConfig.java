@@ -1,22 +1,28 @@
 package com.servidorpipoca.pipocaagil.config;
 
 import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
+import com.servidorpipoca.pipocaagil.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Bean
+    public AuthenticationManager authenticationManager(){
+        return authentication -> authentication;
+    }
 
     @Autowired
     public JwtTokenProvider jwtTokenProvider;
@@ -27,10 +33,25 @@ public class SecurityConfig {
     }
 
     @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf((crsf) -> crsf.disable()).cors((cors) -> cors.disable())
-                .authorizeRequests()
-                .anyRequest().permitAll();
-        return http.build();
+        return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((athz) -> athz
+                        .requestMatchers("/user/*").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("*").permitAll()).build()
+                ;
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        return authenticationProvider;
     }
 }

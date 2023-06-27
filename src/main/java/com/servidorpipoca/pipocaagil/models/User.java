@@ -1,11 +1,13 @@
 package com.servidorpipoca.pipocaagil.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.servidorpipoca.pipocaagil.models.dto.UserDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -16,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements UserDetails {
     public static final String TABLE_NAME = "users";
 
     @Id
@@ -26,29 +28,50 @@ public class User {
 
     @Column(name = "name", length = 100, nullable = false)
     @Size(min = 8, max = 100)
-    @Pattern(regexp = "^[a-zA-Z]+(\\s+[a-zA-Z]+)+$", message = "Nome com formato inválido, precisa conter nome e sobrenome")
     @NotBlank
     private String name;
 
     @Column(name = "password", length = 60, nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8, max = 60)
-    @Pattern(regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "Senha inválida, precisa conter 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractér especial")
     @NotBlank
     private String password;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
-    @Email(message = "Email inválido", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotBlank
     private String email;
 
     @Column(name = "date_birth", nullable = false)
     @NotNull
-    @Past
     private LocalDate dateBirth;
 
-
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("user"));
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
