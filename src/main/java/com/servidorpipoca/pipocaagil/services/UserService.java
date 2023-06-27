@@ -33,7 +33,7 @@ public class UserService {
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new EntityNotFoundException(
-                "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
+                "Usuário não encontrado! Id: " + id));
     }
 
     @Transactional

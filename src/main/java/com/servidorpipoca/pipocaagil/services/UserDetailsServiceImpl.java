@@ -1,6 +1,5 @@
 package com.servidorpipoca.pipocaagil.services;
 
-import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
