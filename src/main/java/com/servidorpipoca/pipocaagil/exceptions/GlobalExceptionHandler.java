@@ -47,12 +47,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MinimumAgeException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleMinimumAgeException(MinimumAgeException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleObjectNotFoundException(
+            IllegalArgumentException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),"Usuário precisa ter no mínimo 18 anos",request.getRequestURI());
+                HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getRequestURI());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
