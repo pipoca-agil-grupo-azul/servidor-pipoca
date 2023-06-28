@@ -2,11 +2,9 @@ package com.servidorpipoca.pipocaagil.services;
 
 import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
-import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,16 +17,10 @@ import java.util.regex.Pattern;
 public class UserService {
 
     @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
@@ -41,7 +33,7 @@ public class UserService {
         user.setId(null);
         nameValidator(user.getName());
         passwordValidator(user.getPassword());
-        bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         emailValidator(user.getEmail());
         ageValidator(user.getDateBirth());
         return userRepository.save(user);
@@ -90,7 +82,7 @@ public class UserService {
         }
 
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Esse email já existe, tente outro");
+            throw new IllegalArgumentException("Email já registrado, tente outro");
         }
     }
 
