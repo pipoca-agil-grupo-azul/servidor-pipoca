@@ -1,12 +1,10 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
 import com.servidorpipoca.pipocaagil.models.User;
-import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import com.servidorpipoca.pipocaagil.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
@@ -15,13 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    public AuthenticationManager authenticationManager;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
