@@ -1,6 +1,8 @@
 package com.servidorpipoca.pipocaagil.services;
 
 import com.servidorpipoca.pipocaagil.models.User;
+import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
+import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -29,23 +31,31 @@ public class UserService {
     }
 
     @Transactional
-    public User create(@Valid User user) {
-        user.setId(null);
-        nameValidator(user.getName());
-        passwordValidator(user.getPassword());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        emailValidator(user.getEmail());
-        ageValidator(user.getDateBirth());
-        return userRepository.save(user);
+    public User create(@Valid UserCreateDTO user) {
+        nameValidator(user.name());
+        passwordValidator(user.password());
+        emailValidator(user.email());
+        ageValidator(user.dateBirth());
+
+        User newUser = new User();
+        newUser.setName(user.name());
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.password()));
+        newUser.setEmail(user.email());
+        newUser.setDateBirth(user.dateBirth());
+
+        return userRepository.save(newUser);
     }
 
     @Transactional
-    public User update(@Valid User user) {
-        User newUser = findById(user.getId());
-        passwordValidator(user.getPassword());
-        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        emailValidator(user.getEmail());
-        newUser.setEmail(user.getEmail());
+    public User update(@Valid Long id,UserUpdateDTO user) {
+        User newUser = findById(id);
+
+        emailValidator(user.email());
+        passwordValidator(user.password());
+
+        newUser.setEmail(user.email());
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.password()));
+
         return userRepository.save(newUser);
     }
 

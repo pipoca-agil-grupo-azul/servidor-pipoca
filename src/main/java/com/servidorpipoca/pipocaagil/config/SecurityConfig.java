@@ -1,8 +1,6 @@
 package com.servidorpipoca.pipocaagil.config;
 
-import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import com.servidorpipoca.pipocaagil.services.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
