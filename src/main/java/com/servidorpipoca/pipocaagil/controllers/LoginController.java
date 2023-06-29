@@ -1,8 +1,6 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
-import com.servidorpipoca.pipocaagil.models.dto.UserDTO;
-import com.servidorpipoca.pipocaagil.repositories.UserRepository;
-import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
+import com.servidorpipoca.pipocaagil.models.dto.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +20,10 @@ public class LoginController {
     public AuthenticationManager authenticationManager;
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody UserDTO dto) {
+    public ResponseEntity<String> login(@RequestBody UserLoginDTO dto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.username(), dto.password())
+                    new UsernamePasswordAuthenticationToken(dto.name(), dto.password())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return ResponseEntity.ok("Login realizado com sucesso!");
