@@ -14,12 +14,12 @@ import java.util.List;
 public class UserSpringSecurity implements UserDetails {
 
     private Long id;
-    private String username;
+    private String email;
     private String password;
 
-    public UserSpringSecurity(Long id,String username, String password){
+    public UserSpringSecurity(Long id,String email, String password){
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -33,9 +33,8 @@ public class UserSpringSecurity implements UserDetails {
         return password;
     }
 
-    @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override

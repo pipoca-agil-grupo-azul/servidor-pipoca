@@ -23,10 +23,10 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestBody UserLoginDTO dto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.name(), dto.password())
-            );
+                    new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return ResponseEntity.ok("Login realizado com sucesso!");
+
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha na autenticação: " + e.getMessage());
         }
