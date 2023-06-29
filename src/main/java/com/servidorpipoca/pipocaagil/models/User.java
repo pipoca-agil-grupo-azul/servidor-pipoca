@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Table(name = User.TABLE_NAME)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
     public static final String TABLE_NAME = "users";
 
