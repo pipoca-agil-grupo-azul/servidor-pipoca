@@ -1,6 +1,5 @@
 package com.servidorpipoca.pipocaagil.config;
 
-import com.servidorpipoca.pipocaagil.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.servidorpipoca.pipocaagil.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
@@ -39,8 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((athz) -> athz
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("*").permitAll()).build()
-                ;
+                        .requestMatchers("*").permitAll())
+                .build();
     }
 
     @Bean
