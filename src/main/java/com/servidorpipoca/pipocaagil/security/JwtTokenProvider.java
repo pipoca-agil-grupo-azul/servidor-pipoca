@@ -16,7 +16,7 @@ public class JwtTokenProvider {
     private String secretKey;
 
     @Value("${jwt.expiration}")
-    private long validityInMilliseconds;
+    private Long validityInMilliseconds;
 
     public void addTokenToResponse(Authentication authentication, HttpServletResponse response) {
         String token = generateToken(authentication);
