@@ -1,6 +1,8 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
 import com.servidorpipoca.pipocaagil.models.dto.UserLoginDTO;
+import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +19,19 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    @Autowired
     public AuthenticationManager authenticationManager;
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody UserLoginDTO dto) {
+    public ResponseEntity<String> login(@RequestBody UserLoginDTO dto, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            tokenProvider.addTokenToResponse(authentication, response);
             return ResponseEntity.ok("Login realizado com sucesso!");
 
         } catch (AuthenticationException e) {
