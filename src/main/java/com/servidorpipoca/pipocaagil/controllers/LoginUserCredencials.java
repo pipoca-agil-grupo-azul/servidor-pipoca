@@ -11,10 +11,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
+@CrossOrigin(origins = "https://localhost:8080/}", allowedHeaders = "*")
 @RestController
 @RequestMapping("/login")
-public class LoginController {
+public class LoginUserCredencials {
 
     @Autowired
     public AuthenticationManager authenticationManager;

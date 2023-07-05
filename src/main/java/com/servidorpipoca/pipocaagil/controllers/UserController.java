@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
+@CrossOrigin(origins = "https://localhost:8080/", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {

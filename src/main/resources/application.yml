@@ -1,12 +1,18 @@
 spring:
   security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 765147924254-26hkmmjumep9ffpdc0cvfm06unihn7l6.apps.googleusercontent.com
+            client-secret: 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
     user:
       name: admin
       password: 143b2947-1bf9-4de6-ac8c-5086221acfb8
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASS}
+    url: jdbc:postgresql://localhost:8011/pipocaagil
+    username: pipocaagil
+    password: pipocaagil
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -16,5 +22,5 @@ spring:
 server:
   port: 8080
 jwt:
-  secret: ${JWT_SECRET}
+  secret: 977ae362-9ac5-4b2e-8a7d-07f7b7ca42e6
   expiration: 3600
