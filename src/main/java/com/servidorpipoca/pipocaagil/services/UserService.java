@@ -22,7 +22,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);

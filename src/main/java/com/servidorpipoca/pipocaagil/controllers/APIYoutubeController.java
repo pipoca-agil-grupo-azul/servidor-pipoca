@@ -18,7 +18,7 @@ import java.util.List;
 public class APIYoutubeController {
 
     @Autowired
-    APIYoutubeService apiYoutubeService;
+    private APIYoutubeService apiYoutubeService;
 
     @GetMapping()
     public List<VideoDTO> getRecentVideos() throws GeneralSecurityException, IOException {
