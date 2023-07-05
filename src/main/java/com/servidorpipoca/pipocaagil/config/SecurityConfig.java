@@ -39,8 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((athz) -> athz
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("*").permitAll()).build()
-                ;
+                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()).build();
     }
 
     @Bean
