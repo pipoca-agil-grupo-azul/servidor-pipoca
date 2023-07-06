@@ -12,10 +12,10 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.secret}")
-    private String secretKey;
 
-    @Value("${jwt.expiration}")
+    private static final String secretKey = System.getenv("JWT_SECRET");;
+
+    @Value("${JWT_EXPIRATION}")
     private Long validityInMilliseconds;
 
     public void addTokenToResponse(Authentication authentication, HttpServletResponse response) {
@@ -30,9 +30,11 @@ public class JwtTokenProvider {
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()
+                .setHeaderParam("alg", "HS256")
+                .setHeaderParam("typ", "JWT")
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(now)
                 .setExpiration(validity)
+                .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
