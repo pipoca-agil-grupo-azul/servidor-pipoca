@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleObjectNotFoundException(
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(
             EntityNotFoundException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleObjectNotFoundException(
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(
             IllegalArgumentException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(

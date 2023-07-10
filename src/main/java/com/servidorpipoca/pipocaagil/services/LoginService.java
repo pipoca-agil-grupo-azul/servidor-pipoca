@@ -3,6 +3,7 @@ package com.servidorpipoca.pipocaagil.services;
 import com.servidorpipoca.pipocaagil.models.dto.UserLoginDTO;
 import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class LoginService {
     public AuthenticationManager authenticationManager;
 
 
-    public ResponseEntity<Map<String, Object>> login(UserLoginDTO dto, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> login(@Valid  UserLoginDTO dto, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));

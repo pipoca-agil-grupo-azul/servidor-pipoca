@@ -17,7 +17,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-
     @PostMapping
     public ResponseEntity<Map<String, Object>> login(@RequestBody UserLoginDTO dto, HttpServletResponse response) {
         return loginService.login(dto, response);
