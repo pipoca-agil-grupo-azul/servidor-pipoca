@@ -1,6 +1,7 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,17 +30,7 @@ public class LoginUserWithGoogle {
     }
 
     @GetMapping("/private")
-    public String privateRoute(@AuthenticationPrincipal OidcUser userPrincipal, HttpServletResponse response) {
-        return String.format("""
-                    <h1> ---- Rota privada! ---- </h1>
-
-                    <h2> Principal: %s </h2>
-                    <h2> Email: %s </h2>
-                    <h3> Authorities: %s </h3>
-                    <h4> JWT: %s </h4>
-                """, userPrincipal, userPrincipal.getAttribute("email"), userPrincipal.getAuthorities(), userPrincipal.getIdToken().getTokenValue());
-//
-//        String token = tokenRequester.requestAccessToken(userPrincipal);
-//        return ResponseEntity.ok().body(token);
+    public ResponseEntity privateRoute(@AuthenticationPrincipal OidcUser userPrincipal, HttpServletResponse response) {
+        return tokenRequester.requestAccessToken(userPrincipal, response);
     }
 }
