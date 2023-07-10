@@ -3,6 +3,7 @@ package com.servidorpipoca.pipocaagil.services;
 import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
+import com.servidorpipoca.pipocaagil.models.enums.UserRole;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -42,6 +43,7 @@ public class UserService {
         newUser.setPassword(bCryptPasswordEncoder.encode(user.password()));
         newUser.setEmail(user.email());
         newUser.setDateBirth(user.dateBirth());
+        newUser.setRole(UserRole.USER);
 
         return userRepository.save(newUser);
     }

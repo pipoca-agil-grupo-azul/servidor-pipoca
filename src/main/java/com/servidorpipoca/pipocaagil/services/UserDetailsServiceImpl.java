@@ -2,7 +2,6 @@ package com.servidorpipoca.pipocaagil.services;
 
 import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
-import com.servidorpipoca.pipocaagil.security.UserSpringSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (Objects.isNull(user)){
             throw new UsernameNotFoundException("Usuário não encontrado" + email);
         }
-        return new UserSpringSecurity(user.getId(),user.getEmail(),user.getPassword());
+        return new User(user.getId(),user.getEmail(),user.getPassword());
     }
 }
