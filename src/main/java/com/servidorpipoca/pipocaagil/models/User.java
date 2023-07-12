@@ -71,7 +71,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getUsername() {
         return email;
     }
