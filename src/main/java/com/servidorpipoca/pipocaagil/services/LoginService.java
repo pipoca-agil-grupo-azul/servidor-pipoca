@@ -45,6 +45,7 @@ public class LoginService {
             responseBody.put("token", tokenProvider.generateToken(authentication));
             responseBody.put("id", user.getId());
             responseBody.put("email", dto.email());
+            responseBody.put("nome", user.getName());
 
             return ResponseEntity.ok(responseBody);
         } catch (AuthenticationException e) {
