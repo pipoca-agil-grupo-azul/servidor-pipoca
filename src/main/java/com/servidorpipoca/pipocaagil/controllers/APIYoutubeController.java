@@ -1,7 +1,7 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
-import com.servidorpipoca.pipocaagil.services.API.dto.VideoDTO;
 import com.servidorpipoca.pipocaagil.services.API.APIYoutubeService;
+import com.servidorpipoca.pipocaagil.services.API.dto.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

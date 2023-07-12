@@ -1,6 +1,8 @@
 package com.servidorpipoca.pipocaagil.services;
 
+import com.servidorpipoca.pipocaagil.models.User;
 import com.servidorpipoca.pipocaagil.models.dto.UserLoginDTO;
+import com.servidorpipoca.pipocaagil.repositories.UserRepository;
 import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -23,6 +25,9 @@ public class LoginService {
     private JwtTokenProvider tokenProvider;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     public AuthenticationManager authenticationManager;
 
 
@@ -34,8 +39,12 @@ public class LoginService {
 
             tokenProvider.addTokenToResponse(authentication, response);
 
+            User user = userRepository.findByEmail(dto.email());
+
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("token", tokenProvider.generateToken(authentication));
+            responseBody.put("id", user.getId());
+            responseBody.put("email", dto.email());
 
             return ResponseEntity.ok(responseBody);
         } catch (AuthenticationException e) {
