@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
@@ -46,10 +47,11 @@ public class OAuth2TokenRequester {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(principal.getAttribute("email"), principal.getAttribute("password"))
-            );
 
-            tokenProvider.addTokenToResponse(authentication, response);
-            Map<String, Object> responseBody = new HashMap<String, Object>();
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("token", principal.getIdToken().getTokenValue());
 
             return ResponseEntity.ok(responseBody);
