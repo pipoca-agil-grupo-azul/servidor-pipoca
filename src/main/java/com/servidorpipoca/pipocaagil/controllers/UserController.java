@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<User> existsByEmail(@RequestBody String email) {
+    public ResponseEntity<?> existsByEmail(@RequestBody String email) {
         return userService.existsUserByEmail(email);
     }
 
