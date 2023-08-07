@@ -23,6 +23,11 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<User> existsByEmail(@RequestBody String email) {
+        return userService.existsUserByEmail(email);
+    }
+
     @PostMapping
     public ResponseEntity<User> create(@RequestBody UserCreateDTO user) {
         User createdUser = userService.create(user);
@@ -31,7 +36,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateDTO user) {
-        User updatedUser = userService.update(id,user);
+        User updatedUser = userService.update(id, user);
         return ResponseEntity.ok(updatedUser);
     }
 

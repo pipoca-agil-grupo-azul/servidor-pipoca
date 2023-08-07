@@ -8,6 +8,7 @@ import com.servidorpipoca.pipocaagil.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,14 @@ public class UserService {
                 "Usuário não encontrado! Id: " + id));
     }
 
+    public ResponseEntity<?> existsUserByEmail(String email) {
+        Boolean user = userRepository.existsByEmail(email);
+        if (!user) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @Transactional
     public User create(@Valid UserCreateDTO user) {
         nameValidator(user.name());
@@ -49,7 +58,7 @@ public class UserService {
     }
 
     @Transactional
-    public User update(@Valid Long id,UserUpdateDTO user) {
+    public User update(@Valid Long id, UserUpdateDTO user) {
         User newUser = findById(id);
 
         emailValidator(user.email());
@@ -74,7 +83,8 @@ public class UserService {
         String regex = "^[A-Za-zÇç]+(?: [A-Za-zÇç]+)+$";
 
         if (!Pattern.matches(regex, name)) {
-            throw new IllegalArgumentException("O nome não é válido. Certifique-se de que ele tenha dois ou mais nomes separados por espaço e não contenha números ou caracteres especiais");
+            throw new IllegalArgumentException(
+                    "O nome não é válido. Certifique-se de que ele tenha dois ou mais nomes separados por espaço e não contenha números ou caracteres especiais");
         }
     }
 
@@ -82,7 +92,8 @@ public class UserService {
         String regex = "^(?=.*[!@#$%^&*(),.?\":{}|<>])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$";
 
         if (!Pattern.matches(regex, password)) {
-            throw new IllegalArgumentException("Senha inválida, precisa conter 1 carácter especial, maiúsculo, minúsculo e 1 número");
+            throw new IllegalArgumentException(
+                    "Senha inválida, precisa conter 1 carácter especial, maiúsculo, minúsculo e 1 número");
         }
     }
 
@@ -102,7 +113,7 @@ public class UserService {
         LocalDate currentDate = LocalDate.now();
         LocalDate minimumDateOfBirth = currentDate.minusYears(18);
 
-        if (date.isAfter(currentDate)){
+        if (date.isAfter(currentDate)) {
             throw new IllegalArgumentException("Data inválida. Digite uma data existente");
         }
 
