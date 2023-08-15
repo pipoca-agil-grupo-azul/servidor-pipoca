@@ -15,7 +15,7 @@ public class JwtTokenProvider {
 
     private static final String secretKey = System.getenv("JWT_SECRET");;
 
-    @Value("${JWT_EXPIRATION}")
+    @Value("10000000")
     private Long validityInMilliseconds;
 
     public void addTokenToResponse(Authentication authentication, HttpServletResponse response) {

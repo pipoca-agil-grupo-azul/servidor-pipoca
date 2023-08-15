@@ -9,5 +9,4 @@ public class PipocaagilApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PipocaagilApplication.class, args);
 	}
-
 }

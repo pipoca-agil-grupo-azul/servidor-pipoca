@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
+//@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
 @RestController
 @RequestMapping("/logingoogle")
 public class LoginGoogleController {

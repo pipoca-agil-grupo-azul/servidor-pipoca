@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
-@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
+//@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
 @RestController
 @RequestMapping("/apiyt")
 public class APIYoutubeController {
