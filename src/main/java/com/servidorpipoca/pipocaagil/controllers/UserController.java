@@ -1,6 +1,7 @@
 package com.servidorpipoca.pipocaagil.controllers;
 
 import com.servidorpipoca.pipocaagil.models.User;
+import com.servidorpipoca.pipocaagil.models.dto.SendEmailDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
 import com.servidorpipoca.pipocaagil.services.EmailService;
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/email")
-    public void email() {
-        emailService.sendEmail();
+    public void email(@RequestBody SendEmailDTO sendEmail) {
+        emailService.sendEmail(sendEmail.to(), sendEmail.subject(), sendEmail.content());
     }
 }
