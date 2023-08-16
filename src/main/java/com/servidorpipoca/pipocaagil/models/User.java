@@ -59,7 +59,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN) {
@@ -103,5 +102,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

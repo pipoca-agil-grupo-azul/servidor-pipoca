@@ -32,12 +32,14 @@ public class UserService {
                 "Usuário não encontrado! Id: " + id));
     }
 
-    public ResponseEntity<?> existsUserByEmail(String email) {
+    public boolean existsUserByEmail(String email) {
         Boolean user = userRepository.existsByEmail(email);
         if (!user) {
-            return ResponseEntity.notFound().build();
+            return false;
+            // return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return true;
+        // return ResponseEntity.ok().build();
     }
 
     @Transactional

@@ -11,12 +11,19 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendEmail(String to, String subject, String content) {
+    public void sendEmail(String to) {
+
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(to);
-        message.setSubject(subject);
-        message.setText(content);
+        message.setSubject("Recuperação de senha - Pipoca Ágil");
+        message.setText("""
+
+                Link para a troca de senha
+
+                - http://localhost:5173/recoverPassword
+
+                """);
         javaMailSender.send(message);
     }
 }

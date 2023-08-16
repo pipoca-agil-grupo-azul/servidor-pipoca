@@ -5,13 +5,14 @@ import com.servidorpipoca.pipocaagil.models.dto.SendEmailDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
 import com.servidorpipoca.pipocaagil.services.EmailService;
+import com.servidorpipoca.pipocaagil.services.SmsService;
 import com.servidorpipoca.pipocaagil.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "${CROSS_ORIGIN}", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -22,16 +23,19 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private SmsService smsService;
+
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         User obj = userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping("/{email}")
-    public ResponseEntity<?> existsByEmail(@RequestBody String email) {
-        return userService.existsUserByEmail(email);
-    }
+    // @PostMapping("/{email}")
+    // public ResponseEntity<?> existsByEmail(@RequestBody String email) {
+    // return userService.existsUserByEmail(email);
+    // }
 
     @PostMapping
     public ResponseEntity<User> create(@RequestBody UserCreateDTO user) {
@@ -53,6 +57,11 @@ public class UserController {
 
     @PostMapping("/email")
     public void email(@RequestBody SendEmailDTO sendEmail) {
-        emailService.sendEmail(sendEmail.to(), sendEmail.subject(), sendEmail.content());
+        emailService.sendEmail(sendEmail.to());
+    }
+
+    @GetMapping("/sms")
+    public void sendSms() {
+        smsService.sendSMS();
     }
 }
