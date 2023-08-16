@@ -1,4 +1,6 @@
 package com.servidorpipoca.pipocaagil.models.dto;
 
-public record UserUpdateDTO(Long id, String email,String password) {
+import jakarta.validation.Valid;
+
+public record UserUpdateDTO(@Valid Long id, String email, String password) {
 }
