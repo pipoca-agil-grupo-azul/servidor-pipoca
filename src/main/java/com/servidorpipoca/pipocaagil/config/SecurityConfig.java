@@ -46,7 +46,8 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
-                        .requestMatchers("/apiyt").permitAll()).build();
+                        .requestMatchers("/apiyt").permitAll()
+                        .requestMatchers("/email").permitAll()).build();
     }
 
     @Bean
