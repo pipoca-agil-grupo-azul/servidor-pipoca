@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class LoginService {
@@ -39,13 +40,13 @@ public class LoginService {
 
             tokenProvider.addTokenToResponse(authentication, response);
 
-            User user = userRepository.findByEmail(dto.email());
+            Optional<User> user = userRepository.findByEmail(dto.email());
 
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("token", tokenProvider.generateToken(authentication));
-            responseBody.put("id", user.getId());
+            responseBody.put("id", user.get().getId());
             responseBody.put("email", dto.email());
-            responseBody.put("nome", user.getName());
+            responseBody.put("nome", user.get().getName());
 
             return ResponseEntity.ok(responseBody);
         } catch (AuthenticationException e) {

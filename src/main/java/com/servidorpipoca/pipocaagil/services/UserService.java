@@ -42,6 +42,7 @@ public class UserService {
         newUser.setName(user.name());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.password()));
         newUser.setEmail(user.email());
+        newUser.setPhone(user.phone());
         newUser.setDateBirth(user.dateBirth());
         newUser.setRole(UserRole.USER);
 

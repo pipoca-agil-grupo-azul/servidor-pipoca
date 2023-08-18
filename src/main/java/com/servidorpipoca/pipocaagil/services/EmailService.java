@@ -16,6 +16,9 @@ public class EmailService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    SmsService smsService;
+
     public void sendEmail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -26,7 +29,7 @@ public class EmailService {
     }
 
     public ResponseEntity<?> checkIfEmailExists(SendEmailDTO email) {
-        if (userRepository.existsByEmail(email.email())) {
+        if (userRepository.findByEmail(email.email()).isPresent()) {
             sendEmail(email.email());
             return ResponseEntity.ok().build();
         }
