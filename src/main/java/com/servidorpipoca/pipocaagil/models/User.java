@@ -45,6 +45,10 @@ public class User implements UserDetails {
     @NotBlank
     private String email;
 
+    @Column(name = "phone", length = 100, nullable = false, unique = true)
+    @NotBlank
+    private String phone;
+
     @Column(name = "date_birth", nullable = false)
     @NotNull
     private LocalDate dateBirth;
