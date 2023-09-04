@@ -3,6 +3,7 @@ package com.servidorpipoca.pipocaagil.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,4 +40,17 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public String generatePasswordResetToken(@NotBlank String email) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
+
+        return Jwts.builder()
+                .setHeaderParam("alg", "HS256")
+                .setHeaderParam("typ", "JWT")
+                .setSubject(email)
+                .setExpiration(validity)
+                .setIssuedAt(now)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
 }

@@ -5,9 +5,12 @@ import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
 import com.servidorpipoca.pipocaagil.models.enums.UserRole;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
+import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +52,12 @@ public class UserService {
     }
 
     @Transactional
-    public User update(@Valid Long id,UserUpdateDTO user) {
-        User newUser = findById(id);
+    public User update(UserUpdateDTO user) {
+        User newUser = userRepository.findByEmail(user.email());
 
         emailValidator(user.email());
         passwordValidator(user.password());
 
-        newUser.setEmail(user.email());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.password()));
 
         return userRepository.save(newUser);
