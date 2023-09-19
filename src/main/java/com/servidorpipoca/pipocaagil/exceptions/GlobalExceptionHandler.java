@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
             Exception ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(),request.getRequestURI());
+                HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), request.getRequestURI());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
             DataIntegrityViolationException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.CONFLICT.value(), ex.getMessage(),request.getRequestURI());
+                HttpStatus.CONFLICT.value(), ex.getMessage(), request.getRequestURI());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }

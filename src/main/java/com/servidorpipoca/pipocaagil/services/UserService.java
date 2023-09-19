@@ -5,12 +5,9 @@ import com.servidorpipoca.pipocaagil.models.dto.UserCreateDTO;
 import com.servidorpipoca.pipocaagil.models.dto.UserUpdateDTO;
 import com.servidorpipoca.pipocaagil.models.enums.UserRole;
 import com.servidorpipoca.pipocaagil.repositories.UserRepository;
-import com.servidorpipoca.pipocaagil.security.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,7 +101,7 @@ public class UserService {
         LocalDate currentDate = LocalDate.now();
         LocalDate minimumDateOfBirth = currentDate.minusYears(18);
 
-        if (date.isAfter(currentDate)){
+        if (date.isAfter(currentDate)) {
             throw new IllegalArgumentException("Data inválida. Digite uma data existente");
         }
 

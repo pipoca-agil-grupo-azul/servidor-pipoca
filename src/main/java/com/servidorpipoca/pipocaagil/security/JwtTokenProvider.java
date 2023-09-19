@@ -14,7 +14,8 @@ import java.util.Date;
 @Service
 public class JwtTokenProvider {
 
-    private static final String secretKey = System.getenv("JWT_SECRET");;
+    private static final String secretKey = System.getenv("JWT_SECRET");
+    ;
 
     @Value("${JWT_EXPIRATION}")
     private Long validityInMilliseconds;

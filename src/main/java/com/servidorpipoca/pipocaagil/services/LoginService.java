@@ -31,7 +31,7 @@ public class LoginService {
     public AuthenticationManager authenticationManager;
 
 
-    public ResponseEntity<Map<String, Object>> login(@Valid  UserLoginDTO dto, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> login(@Valid UserLoginDTO dto, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
