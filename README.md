@@ -94,6 +94,45 @@ Para executar o projeto, você precisará das seguintes configurações:
 
 3. Execute o projeto Spring Boot.
 
+## Dockerização do Projeto
+
+Para facilitar a implantação e a execução do projeto, foi adicionado suporte para contêineres Docker. Isso permite que você empacote o aplicativo e todas as suas dependências em um contêiner isolado, garantindo que ele seja executado de maneira consistente em qualquer ambiente compatível com Docker.
+
+### Dockerfile
+
+O arquivo Dockerfile descreve como construir a imagem do contêiner Docker para o projeto. Ele é dividido em duas etapas:
+
+1. **Build Stage**: Nesta etapa, usamos a imagem `openjdk:17.0.1-jdk-oracle` como base e copiamos o código-fonte do projeto para o contêiner. Em seguida, usamos o Maven para compilar o projeto e criar um arquivo JAR executável. A seguir, criamos um diretório chamado `target/dependency` e extraímos as dependências do JAR para esse diretório.
+
+2. **Runtime Stage**: Nesta etapa, criamos uma nova imagem a partir da imagem base `openjdk:17.0.1-jdk-oracle`. Copiamos as dependências do estágio de compilação para o diretório `/app` no contêiner e configuramos o ponto de entrada para iniciar a aplicação Spring Boot.
+
+Isso significa que, ao executar o contêiner Docker, a aplicação será executada com todas as dependências pré-configuradas, eliminando a necessidade de configurar manualmente o ambiente de desenvolvimento.
+
+### docker-compose.yml
+
+O arquivo `docker-compose.yml` é usado para definir e configurar os serviços Docker necessários para o projeto. Neste caso, ele descreve um serviço para um banco de dados PostgreSQL e configura algumas variáveis de ambiente relacionadas a esse banco de dados.
+
+- **db**: Este serviço usa a imagem oficial do PostgreSQL e expõe o contêiner na porta `8011` para facilitar a conexão. As variáveis de ambiente definidas incluem o nome do usuário, senha e nome do banco de dados a serem usados.
+
+- **volumes**: Um volume Docker chamado `pipocaagil-db-volume` é definido para persistir os dados do banco de dados. Isso garante que os dados do banco de dados não sejam perdidos quando o contêiner for parado.
+
+- **networks**: Uma rede Docker chamada `pipocanetwork-network` é definida para permitir que os contêineres se comuniquem entre si.
+
+### Como Executar com Docker
+
+Para executar o projeto com Docker, siga estas etapas:
+
+1. Certifique-se de ter o Docker instalado no seu sistema.
+
+2. Defina as variáveis de ambiente necessárias no seu sistema ou no arquivo `.env` para as variáveis JWT_SECRET, EMAIL_USER, EMAIL_PASS, DB_HOST, DB_PORT, DB_NAME, DB_USER e DB_PASS com os valores apropriados.
+
+3. Certifique-se de ter um servidor PostgreSQL em execução e configurado de acordo com as variáveis de ambiente definidas.
+
+4. Execute o seguinte comando para construir a imagem Docker do projeto:
+
+   ```shell
+   docker build -t pipocaagil-app .
+
 ## Informações Adicionais
 
 - Agradecimentos ao Ibson Cabral, dono do Podcast que nos deu a oportunidade de atuar com o SCRUM e aplicá-lo no dia-a-dia no desenvolvimento de software.
