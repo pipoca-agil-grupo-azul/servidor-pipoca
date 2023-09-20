@@ -9,7 +9,7 @@ Para o desenvolvimento do projeto, foram utilizado as Tecnologias: Spring boot, 
 ## Documentação Swagger
 
 Este projeto utiliza a swagger-ui para gerar a documentação swagger, acesse aqui:
-- https://servidor-pipoca-production.up.railway.app/swagger-ui/index.html
+- https://backend-pipoca.onrender.com/swagger-ui/index.html
 
 ## Estrutura de Pacotes
 
